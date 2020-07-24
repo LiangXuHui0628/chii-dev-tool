@@ -2,14 +2,15 @@
 	"name": "chii-dev-tool",
 	"displayName": "ChiiDevTool",
 	"description": "ChiiDevTool in VS Code",
-	"publisher":"liangxh",
+	"publisher":"liangxuhui",
+	"author": "liangxh",
 	"version": "0.0.1",
-	"icon": "./img/ic_logo.png",
+	"icon": "img/ic_logo.png",
 	"keywords":["ChromeDevTool","Chii"],
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:LiangXuHui0628/chii-dev-tool.git"
+		"url": "git+https://github.com/LiangXuHui0628/chii-dev-tool.git"
 	},
 	"engines": {
 		"vscode": "^1.47.0"

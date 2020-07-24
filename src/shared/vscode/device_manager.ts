@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as f from "../chii/daemon_interfaces";
 import axios, { AxiosInstance } from 'axios';
+import SystemOut from "./system_out";
 
 export class ChiiDeviceManager implements vscode.Disposable {
 
@@ -10,6 +11,11 @@ export class ChiiDeviceManager implements vscode.Disposable {
 	public currentDevice?: f.Device;
 	private instance!: AxiosInstance;
 	private reqTimer: any;
+	private systemOut: SystemOut ;
+
+	constructor(systemOut: SystemOut){
+		this.systemOut = systemOut ;
+	}
 
     public async showDevicePicker(inputPort: string): Promise<f.Device | undefined>  {
 		this.instance = axios.create({
@@ -64,14 +70,15 @@ export class ChiiDeviceManager implements vscode.Disposable {
     }
 
     public labelForDevice(device: f.Device) {
+		this.systemOut.log("deviceId="+device.id);
 		return device.id;
 	}
     
     public async selectDevice(selection: PickableDevice) {
+		clearInterval(this.reqTimer);
         this.currentDevice = selection.device;
         //选择连接的设备，触发命令，打开调试界面
 		vscode.commands.executeCommand('extension.openChiiDevTool', selection.device.id);
-		clearInterval(this.reqTimer);
 		return true;
 	}
 

@@ -2,10 +2,13 @@ import * as vscode from 'vscode';
 import { ChiiDeviceManager } from './shared/vscode/device_manager';
 import PortInputBox from './shared/vscode/port_inputbox';
 import ChiiServer from './shared/chii/chii_server';
+import SystemOut from './shared/vscode/system_out';
 const internalIp = require('internal-ip');
 let myStatusBarItem: vscode.StatusBarItem;
 
 export function activate(context: vscode.ExtensionContext) {
+	const systemOut = new SystemOut();
+	systemOut.init();
 	/**
 	 * 设置statusBar，并关联command，command触发事件，选择连接的设备
 	 */
@@ -15,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let openDevToolCommand = 'extension.openChiiDevTool' ;
 	let inputPort = '6630';
 	let addr = internalIp.v4.sync();
-	const deviceManager = new ChiiDeviceManager();
+	const deviceManager = new ChiiDeviceManager(systemOut);
 	const portInput = new PortInputBox();
 	const chiiServer = new ChiiServer();
 	context.subscriptions.push(vscode.commands.registerCommand(chiiCommandId, portInput.showPortInputBox));
@@ -24,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
 		inputPort = port ;
 		chiiServer.start(port);
 		vscode.window.showInformationMessage(`Add <script src="http://${addr}:${inputPort}/target.js"></script> in your html file!`);
-	} ));
+	}));
 	context.subscriptions.push(vscode.commands.registerCommand(showDevicePickerCommandId, () => {
 		deviceManager.showDevicePicker(inputPort);
 	}, deviceManager));

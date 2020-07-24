@@ -24,12 +24,12 @@ This project is build base on [chii](https://github.com/liriliri/chii)。
 
 # Step
 
- ![image](./img/start.jpg)
+ ![image](/img/start.jpg)
 
- ![image](./img/port.jpg)
+ ![image](/img/port.jpg)
 
- ![image](./img/conn.jpg)
+ ![image](/img/conn.jpg)
 
- ![image](./img/devtool.jpg)
+ ![image](/img/devtool.jpg)
 
 **Enjoy!**
