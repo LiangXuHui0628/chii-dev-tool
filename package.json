@@ -4,7 +4,7 @@
 	"description": "ChiiDevTool in VS Code",
 	"publisher": "liangxuhui",
 	"author": "liangxh",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"icon": "img/ic_logo.png",
 	"keywords": [
 		"ChromeDevTool",

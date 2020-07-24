@@ -16,7 +16,7 @@ export class ChiiDeviceManager implements vscode.Disposable {
 		this.systemOut = systemOut ;
 	}
 
-    public async showDevicePicker(inputPort: string): Promise<f.Device | undefined>  {
+    public async showDevicePicker(addr: string, inputPort: string): Promise<f.Device | undefined>  {
 		const quickPick = vscode.window.createQuickPick<PickableDevice>();
 		quickPick.placeholder = "Select a id to use";
 		quickPick.busy = true;
@@ -28,7 +28,7 @@ export class ChiiDeviceManager implements vscode.Disposable {
                 return;
 			}
 			this.reqTimer = setInterval(async () => {
-				quickPick.items = await this.getPickableDevices(inputPort);
+				quickPick.items = await this.getPickableDevices(addr, inputPort);
 			  }, 2000);
 		};
 		// Build the initial list.
@@ -48,9 +48,9 @@ export class ChiiDeviceManager implements vscode.Disposable {
 		return undefined;
     }
     
-    public async getPickableDevices(inputPort: string): Promise<PickableDevice[]> {
+    public async getPickableDevices(addr: string, inputPort: string): Promise<PickableDevice[]> {
 		this.systemOut.log("getPickableDevices");
-		const res = await axios.get(`http://localhost:${inputPort}/vscode-plugin`);
+		const res = await axios.get(`http://${addr}:${inputPort}/vscode-plugin`);
 		this.systemOut.log("status="+res.status);
 		this.systemOut.log("data="+res.data);
 		if(res.status === 200){

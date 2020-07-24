@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage(`Add <script src="http://${addr}:${inputPort}/target.js"></script> in your html file!`);
 	}));
 	context.subscriptions.push(vscode.commands.registerCommand(showDevicePickerCommandId, () => {
-		deviceManager.showDevicePicker(inputPort);
+		deviceManager.showDevicePicker(addr, inputPort);
 	}, deviceManager));
 	// create a new status bar item that we can now manage
 	myStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, -100);
