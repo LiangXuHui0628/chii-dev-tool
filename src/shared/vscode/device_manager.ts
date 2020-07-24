@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as f from "../chii/daemon_interfaces";
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import SystemOut from "./system_out";
 
 export class ChiiDeviceManager implements vscode.Disposable {
@@ -9,7 +9,6 @@ export class ChiiDeviceManager implements vscode.Disposable {
 	// private statusBarItem: vs.StatusBarItem;
 	private devices: f.Device[] = [];
 	public currentDevice?: f.Device;
-	private instance!: AxiosInstance;
 	private reqTimer: any;
 	private systemOut: SystemOut ;
 
@@ -18,11 +17,8 @@ export class ChiiDeviceManager implements vscode.Disposable {
 	}
 
     public async showDevicePicker(inputPort: string): Promise<f.Device | undefined>  {
-		this.instance = axios.create({
-            baseURL: `http://localhost:${inputPort}`
-        });
 		const quickPick = vscode.window.createQuickPick<PickableDevice>();
-		quickPick.placeholder = "Select a device to use";
+		quickPick.placeholder = "Select a id to use";
 		quickPick.busy = true;
 		quickPick.ignoreFocusOut = true;
 
@@ -53,9 +49,10 @@ export class ChiiDeviceManager implements vscode.Disposable {
     }
     
     public async getPickableDevices(inputPort: string): Promise<PickableDevice[]> {
-		// const sortedDevices = this.devices.sort(this.deviceSortComparer.bind(this));
-        // Set config defaults when creating the instance
-        const res = await this.instance.get('/vscode-plugin');
+		this.systemOut.log("getPickableDevices");
+		const res = await axios.get(`http://localhost:${inputPort}/vscode-plugin`);
+		this.systemOut.log("status="+res.status);
+		this.systemOut.log("data="+res.data);
 		if(res.status === 200){
             const targets = res.data.targets;
             let pickableItems: PickableDevice[] = targets

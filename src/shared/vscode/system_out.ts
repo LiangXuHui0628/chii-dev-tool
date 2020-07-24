@@ -9,7 +9,7 @@ export default class SystemOut {
         this.channel.appendLine(`Chii-Dev-Tool start！`);
     }
 
-    public log(str: string) {
+    public log(str: any) {
         this.channel.appendLine(str);
     }
     
