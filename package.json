@@ -9,7 +9,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:LiangXuHui0628/siro-jsbridge.git"
+		"url": "git@github.com:LiangXuHui0628/chii-dev-tool.git"
 	},
 	"engines": {
 		"vscode": "^1.47.0"
